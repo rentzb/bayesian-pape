@@ -1,8 +1,7 @@
 ---
-title: "Bayesian Generalized Linear Mixed Effect Models:"
-subtitle: "Accessible Bayesian inference with the rstanarm package"
-author: "Bradley Rentz"
-date: "11 June 2017"
+title: "Bayesian Generalized Linear Mixed Effect Models: Accessible Bayesian inference with the rstanarm package"
+author: "Bradley Rentz, **University of Hawaiʻi at Mānoa**"
+
 output: 
   revealjs::revealjs_presentation:
       theme: sky
