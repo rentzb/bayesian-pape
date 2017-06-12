@@ -182,8 +182,8 @@ options(mc.cores=parallel::detectCores ()) # Run on multiple cores
 model1 <-stan_lmer(vot*1000 ~ consonant2 + (1+consonant2|speaker_id) 
                    + (1|word),
                    data=data_vot,
-                   prior_intercept = normal(0, 5),
-                   prior = normal(0, 5), 
+                   prior_intercept = normal(0, 5,autoscale=F),
+                   prior = normal(0, 5,autoscale = F), 
                    prior_covariance = decov(regularization = 2),
                    chains = 4,
                    iter = 2000, adapt_delta=0.999999,warmup=1000)
@@ -195,8 +195,8 @@ model1 <-stan_lmer(vot*1000 ~ consonant2 + (1+consonant2|speaker_id)
 model2 <-stan_lmer(vot*1000 ~ consonant2 + (1+consonant2|speaker_id) 
                    + (1|word),
                    data=data_vot,
-                   prior_intercept = normal(0, 50),
-                   prior = normal(0, 50), 
+                   prior_intercept = normal(0, 50,autoscale=F),
+                   prior = normal(0, 50,autoscale = F), 
                    prior_covariance = decov(regularization = 2),
                    chains = 4,
                    iter = 2000, adapt_delta=0.999999,warmup=1000)
@@ -208,8 +208,8 @@ model2 <-stan_lmer(vot*1000 ~ consonant2 + (1+consonant2|speaker_id)
 model3 <-stan_lmer(vot*1000 ~ consonant2 + (1+consonant2|speaker_id) 
                    + (1|word),
                    data=data_vot,
-                   prior_intercept = normal(0, 500),
-                   prior = normal(0, 500), 
+                   prior_intercept = normal(0, 500,autoscale=F),
+                   prior = normal(0, 500, autoscale = F), 
                    prior_covariance = decov(regularization = 2),
                    chains = 4,
                    iter = 2000, adapt_delta=0.999999,warmup=1000)
@@ -366,8 +366,8 @@ pp_check(model1)
 # remove random effect for word
 model1a <-stan_lmer(vot*1000 ~ consonant2 + (1+consonant2|speaker_id),
                    data=data_vot,
-                   prior_intercept = normal(0, 5),
-                   prior = normal(0, 5), 
+                   prior_intercept = normal(0, 5,autoscale=F),
+                   prior = normal(0, 5,autoscale=F), 
                    prior_covariance = decov(regularization = 2),
                    chains = 4,
                    iter = 2000, adapt_delta=0.999,warmup=1000)

@@ -13,7 +13,7 @@ library("rstanarm")
 library("bayesplot")
 library("lmerTest")
 library("loo")
-
+library("tidyverse")
 options(mc.cores=parallel::detectCores ()) # Run on multiple cores for Bayesian regressions
  
 
@@ -26,33 +26,37 @@ data_vot$stop <- as.factor(data_vot$stop)
 model1 <-stan_lmer(vot*1000 ~ stop + 
                     (1+stop|speaker_id) + 
                     (1|word),data=data_vot, 
-                  prior_intercept = normal(0, 5),
-                  prior = normal(0, 15), 
+                  prior_intercept = normal(0, 5,autoscale=F),
+                  prior = normal(0, 5,autoscale = F), 
                   prior_covariance = decov(regularization = 2), 
                   chains = 4, 
                   iter = 2000, 
                   adapt_delta=0.9999,
                   warmup=1000)
-
+prior_summary(model1)
+posterior_vs_prior(model1,group_by_parameter = TRUE,facet_args = list(scales = "free_y"))
 # weaker priors
 model2 <-stan_lmer(vot*1000 ~ consonant2 + (1+consonant2|speaker_id)+ 
                      (1|word),
                    data=data_vot,
-                   prior_intercept = normal(0, 50),
-                   prior = normal(0, 50), 
+                   prior_intercept = normal(0, 50,autoscale=F),
+                   prior = normal(0, 50,autoscale=F), 
                    prior_covariance = decov(regularization = 2),
                    chains = 4,
                    iter = 2000, adapt_delta=0.99999,warmup=1000)
-
+posterior_vs_prior(model2,group_by_parameter = TRUE,facet_args = list(scales = "free_y")) 
+prior_summary(model2)
 # very weak priors
 model3 <-stan_lmer(vot*1000 ~ consonant2 + (1+consonant2|speaker_id)+ 
                      (1|word),
                    data=data_vot,
-                   prior_intercept = normal(0, 500),
-                   prior = normal(0, 500), 
+                   prior_intercept = normal(0, 500,autoscale=F),
+                   prior = normal(0, 500,autoscale=F), 
                    prior_covariance = decov(regularization = 2),
                    chains = 4,
                    iter = 2000, adapt_delta=0.999,warmup=1000)
+posterior_vs_prior(model3,group_by_parameter = TRUE,facet_args = list(scales = "free_y"))
+prior_summary(model2)
 
 # frequentist model
 model_freq <- lmer(vot*1000 ~ consonant2 + (1+consonant2|speaker_id)+ 
@@ -74,7 +78,7 @@ posterior <- as.matrix(model1) # save the entire posterior distribution
 plot_title <- ggtitle("Posterior dist for model1",
                       "with medians and 95% intervals")
 mcmc_areas(posterior, 
-           pars=c("(Intercept)","consonant2t̻"), 
+           pars=c("(Intercept)","stoplaminal"), 
            prob=0.95) + plot_title + ggplot2::xlab("VOT (ms)")
 
 ## ploting model2
@@ -109,8 +113,8 @@ pp_check(model1) # shows sampling of data by model
 # run a new version of model1 without random effect of word to see if is meaningful
 model1a <-stan_lmer(vot*1000 ~ consonant2 + (1+consonant2|speaker_id),
                     data=data_vot,
-                    prior_intercept = normal(0, 5),
-                    prior = normal(0, 5), 
+                    prior_intercept = normal(0, 5,autoscale=F),
+                    prior = normal(0, 5,autoscale=F), 
                     prior_covariance = decov(regularization = 2),
                     chains = 4,
                     iter = 2000, adapt_delta=0.999,warmup=1000)
