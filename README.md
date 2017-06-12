@@ -5,4 +5,4 @@ The R markdown presentation is available in the folder "presentation" and the ex
 
 Citation: Rentz, Bradley. 2017. Bayesian Generalized Linear Mixed Effect Models: Accessible Bayesian inference with the rstanarm package. Presented at Statistical methods in phonetic sciences workshop, Phonetics and Phonology in Europe 2017, Cologne, Germany, 11 June 2017. https://github.com/rentzb/bayesian-pape.
 
-The presentation file is presentation/intro_rstanarm.html. The source is intro_rstanarm.Rmd. The image files in the "presentation" and "intro_rstanarm_files" folders are required for the html file to load properly.  Note: the .Rmd may take several minutes to compile.
+The presentation file is presentation/intro_rstanarm.html. The source is intro_rstanarm.Rmd. The image files in the "presentation" and "intro_rstanarm_files" folders are required for the html file to load properly.  Note: the .Rmd file may take several minutes to compile.
